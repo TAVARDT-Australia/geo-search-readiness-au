@@ -58,7 +58,7 @@ def audit_target(url):
             html = resp.read().decode("utf-8", errors="ignore")
             if 'type="application/ld+json"' in html or "type='application/ld+json'" in html:
                 results["has_schema_jsonld"] = True
-            if re.search(r'(?i)<meta\s+name=["']description["']\s+content=["'][^"']+["']', html):
+            if re.search(r"""(?i)<meta\s+name=["']description["']\s+content=["'][^"']+["']""", html):
                 results["has_meta_description"] = True
             if re.search(r'(?i)<h1[^>]*>.*?</h1>', html, re.DOTALL):
                 results["has_h1"] = True
@@ -102,7 +102,7 @@ def audit_target(url):
 def main():
     parser = argparse.ArgumentParser(description="TAVARDT Australia: Generative Engine Optimization (GEO) Auditor")
     parser.add_argument("domain", help="Target domain or base URL to inspect")
-    parser.add_argument("--json", action="store_true", help="Output results in JSON format")
+    parser.add_argument("-j", "--json", action="store_true", help="Output results in JSON format")
     args = parser.parse_args()
 
     domain = args.domain.strip()
